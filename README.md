@@ -35,16 +35,43 @@ The platform caters to four distinct user roles, each with dedicated functionali
 
 ## 📋 Database Configuration
 
-The application expects a SQL database named `startup`.
+The application expects a SQL database named `startup`. Since the database files (`startup_data.sql` and `startup.txt`) and configuration (`Web.config`) have been excluded from this repository for security, you will need to set them up manually.
 
-**Setup Process:**
-1. Connect to Microsoft SQL Server Data Engine.
-2. Execute the `startup_data.sql` script to structure all application tables (such as `Registration`).
-3. If necessary, refer to `startup.txt` which contains snippets of database schema scripts.
-4. Open the `Web.config` in the root folder and verify the connection string:
+**Setting up the Database:**
+1. Open Microsoft SQL Server Management Studio (SSMS).
+2. Create a new database named `startup`.
+3. Create the required tables. For example, the `Registration` table needs the following schema:
+   ```sql
+   CREATE TABLE [dbo].[Registration](
+       [u_id] [int] IDENTITY(1,1) NOT NULL,
+       [fname] [nvarchar](max) NULL,
+       [email] [nvarchar](max) NULL,
+       [password] [nvarchar](50) NULL
+   ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+   ```
+   *(Note: You will also need to create tables for startups, investors, students, and required projects based on the model in the Web Forms pages.)*
+
+**Setting up `Web.config`:**
+1. Create a file named `Web.config` in the root folder of the project.
+2. Add the following base configuration and update the `Data Source` with your local SQL Server instance name:
    ```xml
-   <add name="StarupConnectionString" connectionString="Data Source=YOUR_SERVER_NAME;Initial Catalog=startup;Integrated Security=True" providerName="System.Data.SqlClient"/>
-   <add key="LIS" value="Data Source=YOUR_SERVER_NAME;Initial Catalog=startup;Integrated Security=True"/>
+   <?xml version="1.0"?>
+   <configuration>
+     <connectionStrings>
+       <add name="StarupConnectionString" connectionString="Data Source=YOUR_SERVER_NAME;Initial Catalog=startup;Integrated Security=True" providerName="System.Data.SqlClient"/>
+     </connectionStrings>
+     <system.web>
+       <compilation debug="true" targetFramework="4.5">
+         <assemblies>
+           <add assembly="System.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+         </assemblies>
+       </compilation>
+       <pages controlRenderingCompatibilityVersion="4.0"/>
+     </system.web>
+     <appSettings>
+       <add key="LIS" value="Data Source=YOUR_SERVER_NAME;Initial Catalog=startup;Integrated Security=True"/>
+     </appSettings>
+   </configuration>
    ```
 
 ## 💻 Getting Started
