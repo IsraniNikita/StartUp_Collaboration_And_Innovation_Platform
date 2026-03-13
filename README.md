@@ -78,7 +78,7 @@ The application expects a SQL database named `startup`. Since the database files
 
 1. Set up the Database as mentioned above.
 2. Open `Startup Collaboration and Innovation Platform.sln` inside Visual Studio.
-3. Keep the Startup Project pointing to the root and build the solution (Ctrl+Shift+B).
+3. Keep the Startup Project pointing to the root and build the solution.
 4. Run the project in a browser (typically landing at `home.aspx` or `Sign_in.aspx`).
 
 ## 📁 Directory Structure Overview
